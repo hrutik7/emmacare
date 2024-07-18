@@ -34,7 +34,7 @@
     "tailwindcss-animate": "^1.0.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
-    "ui": "*",
+   
     "zod": "^3.22.4"
   },
   "devDependencies": {

@@ -19,7 +19,8 @@
   },
   "name": "emma-app",
   "workspaces": [
-    "apps/webapp"
+    "apps/webapp",
+    "apps/landingpage"
   ],
   "dependencies": {
     "@clerk/nextjs": "^4.29.1",
