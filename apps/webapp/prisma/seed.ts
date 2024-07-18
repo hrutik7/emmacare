@@ -1,7 +1,7 @@
 import {prisma }from "../src/server/db";
 
 async function main() {
-  const id = 1;
+  const id = "1";
   await prisma.user.upsert({
     where: {
       id,
