@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "fitnessScore" SET DEFAULT 0,
+ALTER COLUMN "mindScore" SET DEFAULT 0,
+ALTER COLUMN "relationShipScore" SET DEFAULT 0,
+ALTER COLUMN "wealthScore" SET DEFAULT 0;

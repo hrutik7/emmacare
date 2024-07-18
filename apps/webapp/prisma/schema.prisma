@@ -1,0 +1,118 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id                     String          @id @default(cuid())
+    externalId             String?         @unique
+    atttributes            Json?
+    mindScore              Int?            @default(0)
+    wealthScore            Int?            @default(0)
+    relationShipScore      Int?            @default(0)
+    fitnessScore           Int?            @default(0)
+    totalMindTasks         Int?
+    totalWealthTasks       Int?
+    totalRelationshipTasks Int?
+    totalFitnessTasks      Int?
+    Introspection          Introspection[]
+    ambitiousGoal          AmbitiousGoal[]
+    minddaily              Mind[]
+    wealthdaily            Wealth[]
+    relationshipdaily      Relationship[]
+    fitnessdaily           Fitness[]
+    
+    progressData           ProgressData[]
+    createdAt              DateTime        @default(now())
+    Improvement            Improvement[]
+}
+
+model AmbitiousGoal {
+    id                String   @id @default(cuid())
+    userId            String
+    goal              String
+    ambitiousGoalTime String?
+    user              User     @relation(fields: [userId], references: [id])
+    createdAt         DateTime @default(now())
+}
+
+model ProgressData {
+    id         String   @id @default(cuid())
+    userId     String?
+    dayname    String?  @unique
+    progress   Int?
+    progressId User?    @relation(fields: [userId], references: [id])
+    createdAt  DateTime @default(now())
+}
+
+model Mind {
+    id        String   @id @default(cuid())
+    startTime String
+    endTime   String
+    task      String
+    status    Boolean? @default(false)
+    mindrel   User?    @relation(fields: [mindrelId], references: [id])
+    mindrelId String?
+    createdAt DateTime @default(now())
+}
+
+model Wealth {
+    id        String   @id @default(cuid())
+    startTime String
+    endTime   String
+    task      String
+    status    Boolean? @default(false)
+    wealth    User?    @relation(fields: [wealthId], references: [id])
+    wealthId  String?
+    createdAt DateTime @default(now())
+}
+
+model Relationship {
+    id             String   @id @default(cuid())
+    startTime      String
+    endTime        String
+    task           String
+    status         Boolean? @default(false)
+    relationship   User?    @relation(fields: [relationshipId], references: [id])
+    relationshipId String?
+    createdAt      DateTime @default(now())
+}
+
+model Fitness {
+    id        String   @id @default(cuid())
+    startTime String
+    endTime   String
+    task      String
+    status    Boolean? @default(false)
+    fit       User?    @relation(fields: [fitId], references: [id])
+    fitId     String?
+    createdAt DateTime @default(now())
+}
+
+
+
+model Improvement {
+    id           String   @id @default(cuid())
+    userId       String
+    improvement  String
+    notImprove   String
+    satisfaction Int[]
+    user         User     @relation(fields: [userId], references: [id])
+    createdAt    DateTime @default(now())
+}
+
+model Introspection {
+    id                String   @id @default(cuid())
+    userId            String
+    introspectionDate DateTime
+    introspectionData String?
+    user              User     @relation(fields: [userId], references: [id])
+    createdAt         DateTime @default(now())
+}
