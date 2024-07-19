@@ -26,7 +26,7 @@ export function DatePickerWithRange({
   React.useEffect(() => {
    
       // console.log(date?.to, "nnnnnnnnmnm")
-    setSelectedDate(date?.to)
+    setSelectedDate(date?.to?.toString())
   }, [date])
   return (
     <div className={cn("grid gap-1", className)}>
