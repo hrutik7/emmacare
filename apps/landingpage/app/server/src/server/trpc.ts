@@ -38,7 +38,7 @@ export const createContextInner = async ({ auth }: CreateContextOptions) => {
 //   });
 // }; // context
 
-export const createContext = ({req, res, auth}: CreateExpressContextOptions & AuthContext) => ({req, res, auth})
+export const createContext = ({req, res, auth}: any) => ({req, res, auth})
 
 
 type Context = inferAsyncReturnType<typeof createContext>;
