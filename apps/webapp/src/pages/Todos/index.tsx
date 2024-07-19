@@ -223,7 +223,7 @@ const progressData = ( totalFilterLength / totalTaskLength) * 100;
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
                     This action cannot be undone. This will permanently delete
-                    all your today's progress.
+                    all your today&apos;s progress.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
