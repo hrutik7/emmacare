@@ -38,7 +38,7 @@ export const createContextInner = async ({ auth }: CreateContextOptions) => {
 //   });
 // }; // context
 
-export const createContext = ({req, res}: CreateExpressContextOptions) => ({req, res})
+export const createContext = ({req, res, auth}: CreateExpressContextOptions & AuthContext) => ({req, res, auth})
 
 
 type Context = inferAsyncReturnType<typeof createContext>;
@@ -62,14 +62,14 @@ export const t = initTRPC.context<Context>().create();
 // });
 
 const isAuthed = t.middleware(({ next, ctx }) => {
-  if (!ctx.auth.userId) {
+  if (!ctx?.auth.userId) {
     console.log("in if");
     throw new Error("Not authenticated");
   }
   console.log("in else");
   return next({
     ctx: {
-      auth: ctx.auth,
+      auth: ctx?.auth,
     },
   });
 });
