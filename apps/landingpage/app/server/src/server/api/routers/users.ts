@@ -13,14 +13,14 @@ const updateUserSchema = z.object({
 });
 
 const getUsers = async () => {
-  const users = await prisma?.users.findMany();
+  const users = await prisma?.user.findMany();
   return users;
 };
 
 export const userRouter = createTRPCRouter({
   users: protectedProcedure.query(async () => {
     console.log("🤣🤣")
-    const users = await prisma?.users.findMany();
+    const users = await prisma?.user.findMany();
     return users;
   }),
 });
