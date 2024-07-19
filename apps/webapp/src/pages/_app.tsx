@@ -11,8 +11,9 @@ import {
 import "~/styles/globals.css";
 import { SignedIn, SignedOut, SignIn } from "@clerk/nextjs";
 const MyApp: AppType = ({ Component, pageProps }) => {
+  const publicKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
   return (
-    <ClerkProvider {...pageProps}>
+    <ClerkProvider  publishableKey={publicKey} {...pageProps}>
       <RecoilRoot>
         <SignedIn>
           <Component {...pageProps} />
