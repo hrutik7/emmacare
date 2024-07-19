@@ -1,5 +1,4 @@
-// import { getServerSession, type Session } from "@acme/auth";
-import {getServerSession ,type Session} from "@acme/auth";
+
 import { getAuth } from "@clerk/nextjs/server";
 import type { SignedInAuthObject,SignedOutAuthObject,} from "@clerk/nextjs/api";
 
@@ -15,6 +14,6 @@ type AuthContextProps = {
   };
   
 
-export const createContext = async (opts: CreateNextContextOptions) => {
+export const createContext = async (opts: any) => {
     return await createContextInner({ auth: getAuth(opts.req) });
   };
