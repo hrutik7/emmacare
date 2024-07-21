@@ -16,7 +16,7 @@ export function Blur() {
 
 const Hero = () => {
   return (
-    <div className="flex gap-12 flex-col justify-center text-inherit items-center align-middle w-[100%] mt-[10%]">
+    <div className="flex gap-10 flex-col justify-center text-inherit items-center align-middle w-[100%] mt-[10%]">
       <Blur />
       <h1 className=" flex-col text-center font-avro  font-semibold tracking-wide flex  justify-center text-[4rem] w-[80%] md:w-[78%]">
         <span>

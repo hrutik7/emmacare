@@ -5,14 +5,14 @@ import { ambitiousGoalDateAtom } from "~/recoil/atom/ambitiousdate";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import { Skeleton } from "~/components/ui/skeleton";
-import { title } from "process";
+// import { title } from "process";
 const CountdownTimer = ({ targetDate }: any) => {
   const datetarget = useRecoilValue(ambitiousGoalDateAtom);
-  const [title , setTitle] = useState("false")
+  const [title , setTitle] = useState(true)
   const calculateTimeRemaining = (targetDate: any) => {
     const now = new Date().getTime();
     const difference: number = new Date(targetDate).getTime() - now;
-
+    console.log(datetarget , new Date().toISOString(), "targetDate");
     if (difference <= 0) {
       return { days: 0, hours: 0, minutes: 0, seconds: 0 };
     }
@@ -25,7 +25,7 @@ const CountdownTimer = ({ targetDate }: any) => {
     const seconds = Math.floor((difference % (1000 * 60)) / 1000);
     // console.log(days, hours, minutes, seconds, "difference");
 if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
-  setTitle("true")
+  setTitle(false)
       return { days, hours, minutes, seconds, difference };
     }
     return { days, hours, minutes, seconds, difference };
@@ -100,7 +100,7 @@ const Countdown = () => {
   return !isLoading ? (
     <div className="flex w-[100%] justify-center rounded-xl border border-gray-200 bg-white py-5 shadow-lg">
       {datetarget !== new Date().toISOString() &&
-      datetarget > new Date().toISOString() && title ? (
+      datetarget > new Date().toISOString()  ? (
         <div className="flex flex-col">
           <div className="w-[100%] font-syne text-5xl font-medium">
             Time Left
