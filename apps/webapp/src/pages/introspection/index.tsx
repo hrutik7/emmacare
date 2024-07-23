@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { api } from "~/utils/api";
 
 const ToDos = () => {
   const finance = useRecoilValue(financeAtom);
@@ -24,7 +25,7 @@ const ToDos = () => {
   const relLength = useRecoilValue(relationshipLengthAtom);
   const [startDate, setStartDate] = useState(new Date());
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-
+  const introData = api?.ai?.createIntrospection?.useMutation();
   const [words, setWords] = useState<string[]>([]);
 
   useEffect(() => {
@@ -43,7 +44,13 @@ const ToDos = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  // const mindLenthpercent = (mindLength * 100) / mindFullness?.length;
+  const selectIntroDate = async () => {
+    const formattedDate = startDate.toLocaleDateString("en-GB");
+    console.log(formattedDate, "brodate");
+    introData?.mutate({
+      date: formattedDate,
+    });
+  };
 
   const fitLenthpercent = (fitLength * 100) / fitness.length;
   const financeLenthpercent = (financeLength * 100) / finance.length;
@@ -81,7 +88,11 @@ const ToDos = () => {
             <div className="w-[45%] rounded-xl border bg-white px-5 py-2">
               <DatePicker
                 selected={startDate}
-                onChange={(date: Date) => setStartDate(date)}
+                onChange={(date: Date) => {
+                  setStartDate(date);
+                  
+                  selectIntroDate();
+                }}
               />
             </div>
           </div>

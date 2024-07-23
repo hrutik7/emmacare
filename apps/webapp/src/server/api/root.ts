@@ -6,6 +6,7 @@ import { allTaskRouter } from "./routers/alltasks";
 import { ambitiousGoalRouter } from "./routers/ambitiousgoal";
 import { progressRouter } from "./routers/progress";
 import { improvementRouter } from "./routers/improvement";
+import {AiRouter} from "./routers/ai";
 /**
  * This is the primary router for your server.
  *
@@ -19,6 +20,7 @@ export const appRouter = createTRPCRouter({
   ambitiousgoal : ambitiousGoalRouter,
   progress : progressRouter,
   improvement : improvementRouter,
+  ai : AiRouter
 });
 
 // export type definition of API

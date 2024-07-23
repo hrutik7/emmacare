@@ -105,6 +105,7 @@ model Improvement {
     notImprove   String
     satisfaction Int[]
     user         User     @relation(fields: [userId], references: [id])
+    date         String
     createdAt    DateTime @default(now())
 }
 

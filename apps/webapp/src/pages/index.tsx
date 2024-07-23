@@ -10,9 +10,13 @@ import { useUser } from "@clerk/nextjs";
 export default function Home() {
   const { user } = useUser();
   const { data } = api.user?.getUser?.useQuery();
-  const { data: daialyTaskData } = api.alltask.getTodayTasks.useQuery();
   
-  // console.log(daialyTaskData, "sdadasdadasd");
+  
+  // const {data:aiData} = api.ai?.generateAIContent?.useMutation({
+  //   date : new Date().toISOString()
+  // });
+
+  
   const today = new Date().toLocaleString("en-US", {
     weekday: "long",
     year: "numeric",

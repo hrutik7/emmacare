@@ -45,6 +45,7 @@ const FinishTask = (props: any) => {
   const [working, setWorking] = useState("");
   const [notWorking, setNotWorking] = useState("");
   const Improvements = api?.improvement.createImprovement.useMutation();
+
   const taskId = props.taskId;
   const rowId = props.rowId;
   const handleCheckbox = () => {
@@ -109,7 +110,10 @@ const FinishTask = (props: any) => {
               <DialogFooter>
                 <Button
                   onClick={() => {
+                    const todayDate = new Date();
+                    const formattedDate = `${todayDate.getDate()}/${todayDate.getMonth() + 1}/${todayDate.getFullYear()}`;
                     switch (taskId) {
+                      
                       case 1:
                         // Improvements.mutate({
                         //   improvement: working,
@@ -122,6 +126,7 @@ const FinishTask = (props: any) => {
                           improvement: working,
                           notimprovement: notWorking,
                           satisfaction: taskComplete,
+                          date: formattedDate,
                         });
 
                         toast({
@@ -138,6 +143,7 @@ const FinishTask = (props: any) => {
                           improvement: working,
                           notimprovement: notWorking,
                           satisfaction: taskComplete,
+                          date: formattedDate,
                         });
 
                         toast({
@@ -153,6 +159,7 @@ const FinishTask = (props: any) => {
                           improvement: working,
                           notimprovement: notWorking,
                           satisfaction: taskComplete,
+                          date: formattedDate,
                         });
 
                         toast({
@@ -168,6 +175,7 @@ const FinishTask = (props: any) => {
                           improvement: working,
                           notimprovement: notWorking,
                           satisfaction: taskComplete,
+                          date: formattedDate,
                         });
 
                         toast({

@@ -1,5 +1,5 @@
 import { create } from "domain";
-import { z } from "zod";
+import { date, z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
@@ -11,6 +11,7 @@ export const improvementRouter = createTRPCRouter({
         id: z.string(),
         notimprovement: z.string(),
         satisfaction: z.array(z.number()),
+        date: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -19,6 +20,7 @@ export const improvementRouter = createTRPCRouter({
           improvement: input.improvement,
           notImprove : input.notimprovement,
           satisfaction: input.satisfaction,
+          date: input.date,
           user: {
             connectOrCreate: {
               where: { externalId: ctx.currentUser as string },
