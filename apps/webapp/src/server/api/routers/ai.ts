@@ -25,10 +25,10 @@ export const AiRouter = createTRPCRouter({
 
       const getIntrodata = await ctx.prisma.Improvement.findMany({
         where: {
-          date: input.date,
+          date: { contains: input.date },
         },
       });
-
-      console.log(getIntrodata, input.date, "getIntrodata");
+      
+      console.log(getIntrodata, input.date,typeof(input.date), "getIntrodata");
     }),
 });

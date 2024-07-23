@@ -32,7 +32,7 @@ export const improvementRouter = createTRPCRouter({
           },
         },
       });
-      console.log("improvement", improvement);
+    
       return improvement;
     }),
 });

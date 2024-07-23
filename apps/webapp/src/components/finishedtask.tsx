@@ -111,7 +111,7 @@ const FinishTask = (props: any) => {
                 <Button
                   onClick={() => {
                     const todayDate = new Date();
-                    const formattedDate = `${todayDate.getDate()}/${todayDate.getMonth() + 1}/${todayDate.getFullYear()}`;
+                    const formattedDate = todayDate.toLocaleDateString("en-GB");
                     switch (taskId) {
                       
                       case 1:

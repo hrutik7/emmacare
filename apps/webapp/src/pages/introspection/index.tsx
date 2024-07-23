@@ -26,6 +26,9 @@ const ToDos = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const introData = api?.ai?.createIntrospection?.useMutation();
+
+
+  
   const [words, setWords] = useState<string[]>([]);
 
   useEffect(() => {
@@ -46,7 +49,7 @@ const ToDos = () => {
 
   const selectIntroDate = async () => {
     const formattedDate = startDate.toLocaleDateString("en-GB");
-    console.log(formattedDate, "brodate");
+    console.log(formattedDate, "brodate",typeof(formattedDate));
     introData?.mutate({
       date: formattedDate,
     });
