@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "og.png",
+        url: "https://ibb.co/fG7pdXM",
         width: 800,
         height: 600,
         alt: "Emma",
@@ -30,7 +30,15 @@ export const metadata: Metadata = {
 
     creator: "@bushido_hk",
 
-    images: ["og.png"], // Must be an absolute URL
+    images: [
+      {
+        url: "https://ibb.co/fG7pdXM",
+
+        width: 1200,
+        height: 630,
+        alt: "Your alt text",
+      },
+    ],
   },
 };
 
