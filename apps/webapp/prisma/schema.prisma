@@ -101,6 +101,7 @@ model Fitness {
 model Improvement {
     id           String   @id @default(cuid())
     userId       String
+    Task         String
     improvement  String
     notImprove   String
     satisfaction Int[]

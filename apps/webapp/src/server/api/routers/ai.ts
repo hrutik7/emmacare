@@ -29,6 +29,7 @@ export const AiRouter = createTRPCRouter({
         },
       });
       
+      const prompt = " I am working on" + `${}`
       console.log(getIntrodata, input.date,typeof(input.date), "getIntrodata");
     }),
 });

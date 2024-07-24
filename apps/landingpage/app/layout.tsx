@@ -1,13 +1,37 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 // import "ui/styles.css";
-import 'tailwindcss/tailwind.css'
+import "tailwindcss/tailwind.css";
 import { ClerkProvider } from "@clerk/nextjs";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Emma",
   description: "Stop wandering around the internet, and start using emma",
+  openGraph: {
+    title: "Emma",
+    description: "Stop wandering around the internet, and start using emma",
+    url: "https://emmacare.vercel.app/",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "og.png",
+        width: 800,
+        height: 600,
+        alt: "Emma",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Emma",
+    description: "Stop wandering around the internet, and start using emma",
+
+    creator: "@bushido_hk",
+
+    images: ["og.png"], // Must be an absolute URL
+  },
 };
 
 export default function RootLayout({
