@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://ibb.co/fG7pdXM",
+        url: "og.jpg",
         width: 800,
         height: 600,
         alt: "Emma",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 
     images: [
       {
-        url: "https://ibb.co/fG7pdXM",
+        url: "og.jpg",
 
         width: 1200,
         height: 630,
