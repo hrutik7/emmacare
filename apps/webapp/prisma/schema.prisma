@@ -28,10 +28,10 @@ model User {
     wealthdaily            Wealth[]
     relationshipdaily      Relationship[]
     fitnessdaily           Fitness[]
-    
-    progressData           ProgressData[]
-    createdAt              DateTime        @default(now())
-    Improvement            Improvement[]
+
+    progressData ProgressData[]
+    createdAt    DateTime       @default(now())
+    Improvement  Improvement[]
 }
 
 model AmbitiousGoal {
@@ -96,8 +96,6 @@ model Fitness {
     createdAt DateTime @default(now())
 }
 
-
-
 model Improvement {
     id           String   @id @default(cuid())
     userId       String
@@ -113,7 +111,7 @@ model Improvement {
 model Introspection {
     id                String   @id @default(cuid())
     userId            String
-    introspectionDate DateTime
+    introspectionDate String   @unique
     introspectionData String?
     user              User     @relation(fields: [userId], references: [id])
     createdAt         DateTime @default(now())

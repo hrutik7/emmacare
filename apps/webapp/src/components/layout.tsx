@@ -10,42 +10,42 @@ import Footer from "./footer";
 import { Toaster } from "~/components/ui/toaster";
 // const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Emma",
-  description: "Stop wandering around the internet, and start using emma",
-  openGraph: {
-    title: "Emma",
-    description: "Stop wandering around the internet, and start using emma",
-    url: "https://emmacare.vercel.app/",
-    locale: "en_US",
-    type: "website",
-    images: [
-      {
-        url: "og.jpg",
-        width: 800,
-        height: 600,
-        alt: "Emma",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Emma",
-    description: "Stop wandering around the internet, and start using emma",
+// export const metadata: Metadata = {
+//   title: "Emma",
+//   description: "Stop wandering around the internet, and start using emma",
+//   openGraph: {
+//     title: "Emma",
+//     description: "Stop wandering around the internet, and start using emma",
+//     url: "https://emmacare.vercel.app/",
+//     locale: "en_US",
+//     type: "website",
+//     images: [
+//       {
+//         url: "og.jpg",
+//         width: 800,
+//         height: 600,
+//         alt: "Emma",
+//       },
+//     ],
+//   },
+//   twitter: {
+//     card: "summary_large_image",
+//     title: "Emma",
+//     description: "Stop wandering around the internet, and start using emma",
 
-    creator: "@bushido_hk",
+//     creator: "@bushido_hk",
 
-    images: [
-      {
-        url: "og.jpg",
+//     images: [
+//       {
+//         url: "og.jpg",
 
-        width: 1200,
-        height: 630,
-        alt: "Your alt text",
-      },
-    ],
-  },
-};
+//         width: 1200,
+//         height: 630,
+//         alt: "Your alt text",
+//       },
+//     ],
+//   },
+// };
 
 export default function RootLayout({
   children,

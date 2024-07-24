@@ -11,6 +11,7 @@ export const improvementRouter = createTRPCRouter({
         id: z.string(),
         notimprovement: z.string(),
         satisfaction: z.array(z.number()),
+        task: z.string(),
         date: z.string(),
       }),
     )
@@ -21,6 +22,7 @@ export const improvementRouter = createTRPCRouter({
           notImprove : input.notimprovement,
           satisfaction: input.satisfaction,
           date: input.date,
+          Task: input.task,
           user: {
             connectOrCreate: {
               where: { externalId: ctx.currentUser as string },

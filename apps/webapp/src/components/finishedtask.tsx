@@ -45,9 +45,10 @@ const FinishTask = (props: any) => {
   const [working, setWorking] = useState("");
   const [notWorking, setNotWorking] = useState("");
   const Improvements = api?.improvement.createImprovement.useMutation();
-
+ 
   const taskId = props.taskId;
   const rowId = props.rowId;
+  
   const handleCheckbox = () => {
     setCheckbox(true);
   };
@@ -112,6 +113,7 @@ const FinishTask = (props: any) => {
                   onClick={() => {
                     const todayDate = new Date();
                     const formattedDate = todayDate.toLocaleDateString("en-GB");
+                    console.log(props.task.task,taskId,props,"donkoutyru")
                     switch (taskId) {
                       
                       case 1:
@@ -126,6 +128,7 @@ const FinishTask = (props: any) => {
                           improvement: working,
                           notimprovement: notWorking,
                           satisfaction: taskComplete,
+                          task: props.task.task,
                           date: formattedDate,
                         });
 
@@ -143,6 +146,7 @@ const FinishTask = (props: any) => {
                           improvement: working,
                           notimprovement: notWorking,
                           satisfaction: taskComplete,
+                          task: props.task.task,
                           date: formattedDate,
                         });
 
@@ -159,6 +163,7 @@ const FinishTask = (props: any) => {
                           improvement: working,
                           notimprovement: notWorking,
                           satisfaction: taskComplete,
+                          task: props.task.task,
                           date: formattedDate,
                         });
 
@@ -175,6 +180,7 @@ const FinishTask = (props: any) => {
                           improvement: working,
                           notimprovement: notWorking,
                           satisfaction: taskComplete,
+                          task: props.task.task,
                           date: formattedDate,
                         });
 

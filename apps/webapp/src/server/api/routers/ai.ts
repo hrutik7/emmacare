@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { get } from "http";
 import { date, z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
@@ -15,21 +16,80 @@ export const AiRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }: any) => {
-      // const prompt = "Write a story about an AI and magic"
-
-      // const result = await model.generateContent(prompt);
-      // const response = await result.response;
-      // const text = response.text();
-      // return text;
-      // console.log(text,"kokokokl");
+      const { date, introspectionDate } = input;
 
       const getIntrodata = await ctx.prisma.Improvement.findMany({
         where: {
-          date: { contains: input.date },
+          date: { contains: date },
         },
       });
-      
-      const prompt = " I am working on" + `${}`
-      console.log(getIntrodata, input.date,typeof(input.date), "getIntrodata");
+
+      const generatedTexts = await Promise.all(
+        getIntrodata.map(async (data) => {
+          const prompt =
+            " I am working on " +
+            `${data.Task}` +
+            " I was able to complete with effiecincy of " +
+            `${data.satisfaction[0]}` +
+            "%" +
+            " things help me in achieving this task is " +
+            `${data.improvement}` +
+            " things that did not help me in achieving this task is " +
+            `${data.notImprove}` +
+            " please give me some suggestion to how I can achieve more by avoidng things that not helping me and how I can enhace the things that are helping me in completing this task" +
+            "just give me 3 to 4 tips  not whole response in 3 to 4 lines";
+          const result = await model.generateContent(prompt);
+          const response = await result.response;
+          const text = response.text();
+          return text;
+        })
+      );
+
+      const introData = await ctx.prisma.Introspection.upsert({
+        where: {
+          introspectionDate: introspectionDate,
+          AND: {
+            user: {
+              externalId: ctx.currentUser as string,
+            },
+          },
+        },
+        update: {
+          introspectionData: generatedTexts[0],
+        },
+        create: {
+          introspectionDate: introspectionDate,
+          introspectionData: generatedTexts[0],
+          user: {
+            connectOrCreate: {
+              where: { externalId: ctx.currentUser as string },
+              create: {
+                externalId: ctx.currentUser,
+              },
+            },
+          },
+        },
+      });
     }),
+
+  getIntrospection: publicProcedure
+  .input(
+    z.object({
+      introspectionDate: z.string(),
+    }),
+  )
+  .mutation(async ({ ctx ,input}) => {
+    const introspectionData = await ctx.prisma.introspection.findMany({
+      where: {
+        user: {
+          externalId: ctx.currentUser,
+        },
+        AND : {
+          introspectionDate : input.introspectionDate
+        }
+
+      },
+    });
+    return introspectionData;
+  }),
 });
