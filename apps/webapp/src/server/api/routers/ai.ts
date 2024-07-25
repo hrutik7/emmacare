@@ -41,7 +41,7 @@ export const AiRouter = createTRPCRouter({
           const result = await model.generateContent(prompt);
           const response = await result.response;
           const text = response.text();
-          console.log(text,"heeistext")
+          console.log(text, "heeistext");
           return text;
         }),
       );
@@ -61,13 +61,12 @@ export const AiRouter = createTRPCRouter({
       //   create: {
       //     introspectionDate: input.date,
       //     introspectionData: generatedTexts[0],
-          
+
       //   },
       // });
 
-
       const createIntroData = await ctx.prisma.introspection.upsert({
-       where : {
+        where: {
           introspectionDate: input.date,
           AND: {
             user: {
@@ -87,10 +86,7 @@ export const AiRouter = createTRPCRouter({
             },
           },
         },
-        
       });
-
-     
     }),
 
   getIntrospection: publicProcedure
@@ -100,9 +96,8 @@ export const AiRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const introspectionData = await ctx.prisma.introspection.findUnique({
+     return await ctx.prisma.introspection.findUnique({
         where: {
-         
           introspectionDate: input.introspectionDate,
           AND: {
             user: {
@@ -111,11 +106,7 @@ export const AiRouter = createTRPCRouter({
           },
         },
       });
-const prompt = "summarize " + `${introspectionData.introspectionData}` + " in one single paragraph"
-const resultprompt = await model.generateContent(prompt)
-const response = await resultprompt.response   
-const resulttext = response.text()   
-console.log(resulttext, "introspectionData");
-      return introspectionData;
+      
+      
     }),
 });
