@@ -41,11 +41,12 @@ export const AiRouter = createTRPCRouter({
           const result = await model.generateContent(prompt);
           const response = await result.response;
           const text = response.text();
-          console.log(text, "heeistext");
+          
           return text;
         }),
       );
-
+      const combinedText = generatedTexts.join('');
+      console.log( "heeistext",combinedText);
       // const introData = await ctx.prisma.Introspection.upsert({
       //   where: {
       //     introspectionDate: input.date,
@@ -75,11 +76,11 @@ export const AiRouter = createTRPCRouter({
           },
         },
         update: {
-          introspectionData: generatedTexts[0],
+          introspectionData: combinedText,
         },
         create: {
           introspectionDate: input.date,
-          introspectionData: generatedTexts[0],
+          introspectionData: combinedText,
           user: {
             connect: {
               externalId: ctx.currentUser as string,
