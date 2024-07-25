@@ -41,13 +41,34 @@ export const AiRouter = createTRPCRouter({
           const result = await model.generateContent(prompt);
           const response = await result.response;
           const text = response.text();
+          console.log(text,"heeistext")
           return text;
-        })
+        }),
       );
 
-      const introData = await ctx.prisma.Introspection.upsert({
-        where: {
-          introspectionDate: introspectionDate,
+      // const introData = await ctx.prisma.Introspection.upsert({
+      //   where: {
+      //     introspectionDate: input.date,
+      //     AND: {
+      //       user: {
+      //         externalId: ctx.currentUser as string,
+      //       },
+      //     },
+      //   },
+      //   update: {
+      //     introspectionData: generatedTexts[0],
+      //   },
+      //   create: {
+      //     introspectionDate: input.date,
+      //     introspectionData: generatedTexts[0],
+          
+      //   },
+      // });
+
+
+      const createIntroData = await ctx.prisma.introspection.upsert({
+       where : {
+          introspectionDate: input.date,
           AND: {
             user: {
               externalId: ctx.currentUser as string,
@@ -58,38 +79,43 @@ export const AiRouter = createTRPCRouter({
           introspectionData: generatedTexts[0],
         },
         create: {
-          introspectionDate: introspectionDate,
+          introspectionDate: input.date,
           introspectionData: generatedTexts[0],
           user: {
-            connectOrCreate: {
-              where: { externalId: ctx.currentUser as string },
-              create: {
-                externalId: ctx.currentUser,
-              },
+            connect: {
+              externalId: ctx.currentUser as string,
+            },
+          },
+        },
+        
+      });
+
+     
+    }),
+
+  getIntrospection: publicProcedure
+    .input(
+      z.object({
+        introspectionDate: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const introspectionData = await ctx.prisma.introspection.findUnique({
+        where: {
+         
+          introspectionDate: input.introspectionDate,
+          AND: {
+            user: {
+              externalId: ctx.currentUser,
             },
           },
         },
       });
+const prompt = "summarize " + `${introspectionData.introspectionData}` + " in one single paragraph"
+const resultprompt = await model.generateContent(prompt)
+const response = await resultprompt.response   
+const resulttext = response.text()   
+console.log(resulttext, "introspectionData");
+      return introspectionData;
     }),
-
-  getIntrospection: publicProcedure
-  .input(
-    z.object({
-      introspectionDate: z.string(),
-    }),
-  )
-  .mutation(async ({ ctx ,input}) => {
-    const introspectionData = await ctx.prisma.introspection.findMany({
-      where: {
-        user: {
-          externalId: ctx.currentUser,
-        },
-        AND : {
-          introspectionDate : input.introspectionDate
-        }
-
-      },
-    });
-    return introspectionData;
-  }),
 });

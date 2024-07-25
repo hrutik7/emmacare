@@ -111,7 +111,7 @@ model Improvement {
 model Introspection {
     id                String   @id @default(cuid())
     userId            String
-    introspectionDate String   @unique
+    introspectionDate String?  @unique  
     introspectionData String?
     user              User     @relation(fields: [userId], references: [id])
     createdAt         DateTime @default(now())

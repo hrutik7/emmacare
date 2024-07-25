@@ -26,7 +26,7 @@ const ToDos = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const introData = api?.ai?.createIntrospection?.useMutation();
-
+const getIntroData = api?.ai?.getIntrospection?.useMutation();
 
   
   const [words, setWords] = useState<string[]>([]);
@@ -53,6 +53,12 @@ const ToDos = () => {
     introData?.mutate({
       date: formattedDate,
     });
+
+    getIntroData?.mutate({
+      introspectionDate: formattedDate,  
+    });
+
+    console.log(getIntroData,"dataaubro")
   };
 
   const fitLenthpercent = (fitLength * 100) / fitness.length;
