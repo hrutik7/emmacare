@@ -15,8 +15,10 @@ export default function Navbar() {
           <Image src="/emma.png" alt="logo" width={50} height={50} />
         </div>
         <div className="flex flex-row items-center   sm:justify-end sm:mt-0 sm:ps-5">
-          <div className="flex text-white text-[16px]  font-sans font-medium p-3 cursor-pointer text-center bg-[#2971C7] align-middle justify-center rounded-xl h-12 ">
+          <div  className="flex text-white text-[16px]  font-sans font-medium p-3 cursor-pointer text-center bg-[#2971C7] align-middle justify-center rounded-xl h-12 ">
+          <a href="http://localhost:3000/">
           Try emma for free
+          </a>
           </div>
          
         </div>

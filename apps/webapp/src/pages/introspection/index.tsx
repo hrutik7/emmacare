@@ -26,19 +26,17 @@ const ToDos = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const introData = api?.ai?.createIntrospection?.useMutation();
-const getIntroData = api?.ai?.getIntrospection?.useMutation();
+  const getIntroData = api?.ai?.getIntrospection?.useMutation();
 
-  
   const [words, setWords] = useState<string[]>([]);
-// useEffect(()=>{
-//   if(!isLoading && !isError){
-//     selectIntroDate()
-//   }
-// },[words])
+  // useEffect(()=>{
+  //   if(!isLoading && !isError){
+  //     selectIntroDate()
+  //   }
+  // },[words])
   useEffect(() => {
     // Break down the paragraph into an array of words
-    const paragraph =
-      "Select the date";
+    const paragraph = "Select the date";
     const wordsArray = paragraph.split(" ");
     setWords(wordsArray);
 
@@ -53,19 +51,31 @@ const getIntroData = api?.ai?.getIntrospection?.useMutation();
 
   const selectIntroDate = async () => {
     const formattedDate = startDate.toLocaleDateString("en-GB");
-    console.log(formattedDate, "brodate",typeof(formattedDate));
+    console.log(formattedDate, "brodate", typeof formattedDate);
     introData?.mutate({
       date: formattedDate,
     });
 
     getIntroData?.mutate({
-      introspectionDate: formattedDate,  
+      introspectionDate: formattedDate,
     });
 
-    const introspectionWOrds = await getIntroData?.data?.introspectionData?.replace("**","").split(/\s+/) ? getIntroData?.data?.introspectionData?.replace("**","").split(/\s+/) : ["No data found"]
+    const introspectionWOrds = (await getIntroData?.data?.introspectionData
+      ?.replaceAll(/\*\*/g, "")
+      ?.split(/\s+/))
+      ? getIntroData?.data?.introspectionData
+        ?.replaceAll(/\*\*/g, "")
+        .replace(/^\d+\.\s/gm, "")
+        .replace(/[, ]+/g, " ")
+        .trim()
+        .split(/\s+/)
+      : ["No data found"];
 
-    console.log(getIntroData?.data?.introspectionData?.replaceAll("**","").split(/\s+/),"dataaubro")
-    setWords(introspectionWOrds)
+    console.log(
+      getIntroData?.data?.introspectionData?.replaceAll("**", "").split(/\s+/),
+      "dataaubro",
+    );
+    setWords(introspectionWOrds);
   };
 
   const fitLenthpercent = (fitLength * 100) / fitness.length;
@@ -106,7 +116,7 @@ const getIntroData = api?.ai?.getIntrospection?.useMutation();
                 selected={startDate}
                 onChange={(date: Date) => {
                   setStartDate(date);
-                  
+
                   selectIntroDate();
                 }}
               />
