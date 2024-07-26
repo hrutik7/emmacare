@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import RootLayout from "~/components/layout";
 import { financeAtom } from "~/recoil/atom/finance";
 import { fitnessAtom } from "~/recoil/atom/fitness";
@@ -27,13 +27,26 @@ const ToDos = () => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const introData = api?.ai?.createIntrospection?.useMutation();
   const getIntroData = api?.ai?.getIntrospection?.useMutation();
-
+  const {
+    data: introQueryData,
+    isError,
+    isLoading,
+  } = api?.ai?.getIntroQuery?.useQuery({
+    introspectionDate: startDate.toLocaleDateString("en-GB"),
+  });
   const [words, setWords] = useState<string[]>([]);
   // useEffect(()=>{
   //   if(!isLoading && !isError){
   //     selectIntroDate()
   //   }
   // },[words])
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      getIntroSpec();
+    }
+    console.log(words, "wordddd");
+  }, [startDate]);
+  
   useEffect(() => {
     // Break down the paragraph into an array of words
     const paragraph = "Select the date";
@@ -43,40 +56,53 @@ const ToDos = () => {
     // Start rendering words one by one
     const intervalId = setInterval(() => {
       setCurrentWordIndex((prevIndex) => prevIndex + 1);
-    }, 400); // Adjust the interval time as needed
+    }, 600); // Adjust the interval time as needed
 
     // Clear the interval when all words are rendered
     return () => clearInterval(intervalId);
   }, []);
-
-  const selectIntroDate = async () => {
-    const formattedDate = startDate.toLocaleDateString("en-GB");
-    console.log(formattedDate, "brodate", typeof formattedDate);
-    introData?.mutate({
-      date: formattedDate,
-    });
-
-    getIntroData?.mutate({
-      introspectionDate: formattedDate,
-    });
-
-    const introspectionWOrds = (await getIntroData?.data?.introspectionData
+  const getIntroSpec = async () => {
+    const introspectionWOrds = introQueryData?.introspectionData
       ?.replaceAll(/\*\*/g, "")
-      ?.split(/\s+/))
-      ? getIntroData?.data?.introspectionData
-        ?.replaceAll(/\*\*/g, "")
-        .replace(/^\d+\.\s/gm, "")
-        .replace(/[, ]+/g, " ")
-        .trim()
-        .split(/\s+/)
+      ?.split(/\s+/)
+      ? introQueryData?.introspectionData
+          ?.replaceAll(/\*\*/g, "")
+          .replace(/^\d+\.\s/gm, "")
+          .replace(/[, ]+/g, " ")
+          .trim()
+          .split(/\s+/)
       : ["No data found"];
-
-    console.log(
-      getIntroData?.data?.introspectionData?.replaceAll("**", "").split(/\s+/),
-      "dataaubro",
-    );
     setWords(introspectionWOrds);
   };
+
+  // const selectIntroDate = async () => {
+  //   const formattedDate = startDate.toLocaleDateString("en-GB");
+  //   console.log(formattedDate, "brodate", typeof formattedDate);
+  //   introData?.mutate({
+  //     date: formattedDate,
+  //   });
+
+  //   getIntroData?.mutate({
+  //     introspectionDate: formattedDate,
+  //   });
+
+  //   const introspectionWOrds = ( await getIntroData?.data?.introspectionData
+  //     ?.replaceAll(/\*\*/g, "")
+  //     ?.split(/\s+/))
+  //     ? getIntroData?.data?.introspectionData
+  //       ?.replaceAll(/\*\*/g, "")
+  //       .replace(/^\d+\.\s/gm, "")
+  //       .replace(/[, ]+/g, " ")
+  //       .trim()
+  //       .split(/\s+/)
+  //     : ["No data found"];
+
+  //   console.log(
+  //     getIntroData?.data?.introspectionData?.replaceAll("**", "").split(/\s+/),
+  //     "dataaubro",
+  //   );
+  //   setWords(introspectionWOrds);
+  // };
 
   const fitLenthpercent = (fitLength * 100) / fitness.length;
   const financeLenthpercent = (financeLength * 100) / finance.length;
@@ -117,7 +143,7 @@ const ToDos = () => {
                 onChange={(date: Date) => {
                   setStartDate(date);
 
-                  selectIntroDate();
+                  // selectIntroDate();
                 }}
               />
             </div>

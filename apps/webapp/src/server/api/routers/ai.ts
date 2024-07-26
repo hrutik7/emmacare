@@ -97,7 +97,7 @@ export const AiRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-     return await ctx.prisma.introspection.findUnique({
+     const getIntroData = await ctx.prisma.introspection.findUnique({
         where: {
           introspectionDate: input.introspectionDate,
           AND: {
@@ -107,6 +107,33 @@ export const AiRouter = createTRPCRouter({
           },
         },
       });
+     
+      return getIntroData;
+      
+      
+    }),
+
+
+
+    getIntroQuery: publicProcedure
+    .input(
+      z.object({
+        introspectionDate: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+     const getIntroData = await ctx.prisma.introspection.findUnique({
+        where: {
+          introspectionDate: input.introspectionDate,
+          AND: {
+            user: {
+              externalId: ctx.currentUser,
+            },
+          },
+        },
+      });
+      console.log(getIntroData, "getIntroDatagetIntroData");
+      return getIntroData;
       
       
     }),
