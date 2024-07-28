@@ -26,17 +26,20 @@ const Introspection = () => {
           .replace(/^\d+\.\s/gm, "")
           .replace(/[, ]+/g, " ")
           .trim()
-          .split(/\s+/).join()
+          .split(/\s+/)
+          .join()
       : ["No data found"];
-      setWords(introspectionWOrds);
+    setWords(introspectionWOrds);
     console.log(
       introQueryData?.introspectionData
         ?.replaceAll(/\*\*/g, "")
         .replace(/^\d+\.\s/gm, "")
         .replace(/[, ]+/g, " ")
         .trim()
-        .split(/\s+/).join(),
-      "introspectionWOrds",typeof introspectionWOrds
+        .split(/\s+/)
+        .join(),
+      "introspectionWOrds",
+      typeof introspectionWOrds,
     );
   };
 
@@ -53,11 +56,12 @@ const Introspection = () => {
           scrollbarWidth: "thin",
           msOverflowStyle: "none",
           scrollbarColor: "black",
+          overflowX: "auto", // Add this line to enable horizontal scrolling
         }}
-        className="h-56 overflow-y-scroll rounded-md border"
+        className="h-56 text-wrap  w-[100%] overflow-y-scroll rounded-md border"
       >
-        <div className="max-w-[1000px]">
-          <p className="px-10 py-10 text-sm text-gray-400">{words}</p>
+        <div className="text-wrap ">
+          <div className="px-10 py-10 text-sm text-gray-400">{words}</div>
         </div>
       </div>
     </div>
