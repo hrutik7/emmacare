@@ -14,8 +14,10 @@ const Introspection = () => {
     introspectionDate: yesterday.toLocaleDateString("en-GB"),
   });
   useEffect(() => {
+   if(!isError && !isLoading){
     getIntrospection();
-  });
+   }
+  },[]);
 
   const getIntrospection = () => {
     const introspectionWOrds = introQueryData?.introspectionData

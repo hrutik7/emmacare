@@ -12,7 +12,7 @@ const CountdownTimer = ({ targetDate }: any) => {
   const calculateTimeRemaining = (targetDate: any) => {
     const now = new Date().getTime();
     const difference: number = new Date(targetDate).getTime() - now;
-    console.log(datetarget , new Date().toISOString(), "targetDate");
+    
     if (difference <= 0) {
       return { days: 0, hours: 0, minutes: 0, seconds: 0 };
     }
