@@ -12,6 +12,16 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { columns } from "./columns";
@@ -59,8 +69,6 @@ const TodoBlock = (props: any) => {
     isError: allTasksError,
   } = api.alltask?.getTodayAllTasks?.useQuery();
 
-
- 
   const [data, setData] = useState<
     {
       startTime: string;
@@ -87,15 +95,11 @@ const TodoBlock = (props: any) => {
     setData(relationshipData);
   }, [relationshipData]);
   useEffect(() => {
-   
-    if(!allTasksLoading && !allTasksError){
-     const resultEndTIme =  getTimeEndData().then((res) => {
-      console.log(res, "resultEndTIme");
-      // setEndTimeData(res);
-    }
-    );
-
-     
+    if (!allTasksLoading && !allTasksError) {
+      const resultEndTIme = getTimeEndData().then((res) => {
+        console.log(res, "resultEndTIme");
+        // setEndTimeData(res);
+      });
     }
   }, [props.data]);
   const mindTaskDataAdd = api?.dailytask.createMindfulTask?.useMutation();
@@ -124,7 +128,6 @@ const TodoBlock = (props: any) => {
       });
       setTimeData(EndTimeList);
       return EndTimeList;
-    
     }
   };
   const updateMindTask = async () => {
@@ -347,36 +350,52 @@ const TodoBlock = (props: any) => {
                     />
                   </div>
                   <div className="justify-left flex items-center gap-2">
-                    <Label htmlFor="username" className="w-[95%] text-left">
+                    <Label htmlFor="username" className="w-[20%] text-left">
                       Start time
                     </Label>
-                    <Input
-                      id="name"
-                      value={mindStartHR}
-                      className="col-span-3"
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        if (/^\d*$/.test(value) && parseInt(value) <= 12) {
-                          setMindStartsHR(value);
-                        }
-                      }}
-                      placeholder="HH"
-                    />
-
-                    <Input
-                      id="name"
-                      value={mindStartmm}
-                      className="col-span-3"
-                      onChange={(e) => {
-                        const value = e.target.value;
+                    <div className="flex w-[90%] gap-4">
+                      <Select>
+                        <SelectTrigger className="">
+                          <SelectValue placeholder="00" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {[...Array(13)].map((_, index) => (
+                              <SelectItem
+                                key={index}
+                                value={index.toString().padStart(2, "0")}
+                              >
+                                {index.toString().padStart(2, "0")}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      {/* const value = e.target.value;
                         if (/^\d*$/.test(value) && parseInt(value) <= 60) {
                           setMindStartsmm(value);
                         }
                       }}
                       placeholder="MM"
-                    />
-
-                    <Input
+                    /> */}
+                      <Select>
+                        <SelectTrigger className="">
+                          <SelectValue placeholder="00" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {[...Array(61)].map((_, index) => (
+                              <SelectItem
+                                key={index}
+                                value={index.toString().padStart(2, "0")}
+                              >
+                                {index.toString().padStart(2, "0")}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      {/* <Input
                       id="name"
                       value={mindClockTime}
                       className="col-span-3"
@@ -387,51 +406,97 @@ const TodoBlock = (props: any) => {
                         }
                       }}
                       placeholder="AM / PM"
-                    />
+                    /> */}
+                      <Select>
+                        <SelectTrigger className="">
+                          <SelectValue placeholder="AM/PM" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="apple">Apple</SelectItem>
+                            <SelectItem value="banana">Banana</SelectItem>
+                            <SelectItem value="blueberry">Blueberry</SelectItem>
+                            <SelectItem value="grapes">Grapes</SelectItem>
+                            <SelectItem value="pineapple">Pineapple</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
 
                   <div className="justify-left flex items-center gap-2">
-                    <Label htmlFor="username" className="w-[95%] text-left">
+                    <Label htmlFor="username" className="w-[20%] text-left">
                       End time
                     </Label>
-                    <Input
-                      id="name"
-                      value={mindEndHR}
-                      className="col-span-3"
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        if (/^\d*$/.test(value) && parseInt(value) <= 12) {
-                          setMindEndsHR(value);
-                        }
-                      }}
-                      placeholder="HH"
-                    />
-
-                    <Input
-                      id="name"
-                      value={mindEndmm}
-                      className="col-span-3"
-                      onChange={(e) => {
-                        const value = e.target.value;
+                    <div className="flex w-[90%] gap-4">
+                      <Select>
+                        <SelectTrigger className="">
+                          <SelectValue placeholder="00" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {[...Array(13)].map((_, index) => (
+                              <SelectItem
+                                key={index}
+                                value={index.toString().padStart(2, "0")}
+                              >
+                                {index.toString().padStart(2, "0")}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      {/* const value = e.target.value;
                         if (/^\d*$/.test(value) && parseInt(value) <= 60) {
-                          setMindEndsmm(value);
+                          setMindStartsmm(value);
                         }
                       }}
                       placeholder="MM"
-                    />
-
-                    <Input
+                    /> */}
+                      <Select>
+                        <SelectTrigger className="">
+                          <SelectValue placeholder="00" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {[...Array(61)].map((_, index) => (
+                              <SelectItem
+                                key={index}
+                                value={index.toString().padStart(2, "0")}
+                              >
+                                {index.toString().padStart(2, "0")}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      {/* <Input
                       id="name"
-                      value={mindEndClockTime}
+                      value={mindClockTime}
                       className="col-span-3"
                       onChange={(e) => {
                         const value = e.target.value.toUpperCase();
                         if (value === "AM" || value === "PM") {
-                          setMinddEndClockTime(value);
+                          setMindClockTime(value);
                         }
                       }}
                       placeholder="AM / PM"
-                    />
+                    /> */}
+                      <Select>
+                        <SelectTrigger className="">
+                          <SelectValue placeholder="AM/PM" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="apple">Apple</SelectItem>
+                            <SelectItem value="banana">Banana</SelectItem>
+                            <SelectItem value="blueberry">Blueberry</SelectItem>
+                            <SelectItem value="grapes">Grapes</SelectItem>
+                            <SelectItem value="pineapple">Pineapple</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                 </div>
                 <DialogFooter>

@@ -52,6 +52,7 @@ const RadarGraph = (props:any) => {
     { name: "Relationship", x: props?.relationship },
     { name: "Fitness", x: props?.fit },
   ];
+  
 
   return (
     <div className="flex  w-[100%] flex-col rounded-xl border border-gray-200 bg-white px-10 py-5 text-3xl font-semibold shadow-lg">

@@ -128,7 +128,23 @@ const Countdown = () => {
     </div>
   ) : (
     <div className="flex w-[100%] justify-center rounded-xl border border-gray-200 bg-white py-5 shadow-lg">
-      <Skeleton className="h-[100%] w-[100%] rounded-xl" />
+     <div className="flex flex-col">
+          <div className="w-[100%] font-syne text-5xl font-medium">
+            Time Left
+          </div>
+
+          <div className="flex flex-row gap-10">
+            <div className="flex flex-col items-center py-9">
+              <div className="text-xl gap-10 flex flex-wrap">
+                {" "}
+                <Skeleton className="h-20 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-400 w-20" />
+                <Skeleton className="h-20 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-400 w-20" />
+                <Skeleton className="h-20 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-400 w-20" />
+                <Skeleton className="h-20 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-400 w-20" />
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
   );
 };

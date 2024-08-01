@@ -1,5 +1,5 @@
 import { z } from "zod";
-
+import { redis } from "~/lib/redis";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const ambitiousGoalRouter = createTRPCRouter({
@@ -18,7 +18,7 @@ export const ambitiousGoalRouter = createTRPCRouter({
           ambitiousGoalTime: input.ambitiousGoalTime,
           user: {
             connectOrCreate: {
-              where: { externalId: ctx.currentUser as string},
+              where: { externalId: ctx.currentUser as string },
               create: {
                 externalId: ctx.currentUser,
                 // other necessary fields to create a User
@@ -32,14 +32,22 @@ export const ambitiousGoalRouter = createTRPCRouter({
     }),
 
   getAmbitiousGoals: publicProcedure.query(async ({ ctx }) => {
-    const ambitiousGoals = await ctx.prisma.ambitiousGoal.findMany({
-      where: {
-        user: {
-          externalId: ctx.currentUser,
+    const cachedAmbitiousGoalDate = await redis.get("ambitiousGoalDate");
+    if (cachedAmbitiousGoalDate) {
+      console.log("cacheddasdsad");
+      return JSON.parse(cachedAmbitiousGoalDate);
+    } else {
+      const ambitiousGoals = await ctx.prisma.ambitiousGoal.findMany({
+        where: {
+          user: {
+            externalId: ctx.currentUser,
+          },
         },
-      },
-    });
-    console.log(ambitiousGoals, "lodu", ctx.currentUser);
-    return ambitiousGoals;
+      });
+
+      await redis.set("ambitiousGoalDate", JSON.stringify(ambitiousGoals), "EX", 300);
+      console.log(ambitiousGoals, "lodu", ctx.currentUser);
+      return ambitiousGoals;
+    }
   }),
 });

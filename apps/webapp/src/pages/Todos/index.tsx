@@ -40,11 +40,11 @@ const ToDos = () => {
   const [relprogess, setRelProgress] = useRecoilState(relationshipLengthAtom);
   const [financeprogess, setFinanceProgress] =
     useRecoilState(financeLengthAtom);
-  
+
   const deleteAll = api.dailytask?.deleteAllTasks?.useMutation();
 
   const {
-    data: allTasksList ,
+    data: allTasksList,
     isLoading: allTasksLoading,
     isError: allTasksError,
   } = api.alltask?.getTodayAllTasks?.useQuery();
@@ -69,8 +69,6 @@ const ToDos = () => {
     isLoading: relIsLoading,
     isError: relIsError,
   } = api.dailytask?.getRelationshipTasks?.useQuery();
-
-
 
   const getRelData = () => {
     if (!relIsLoading && !relIsError) {
@@ -97,11 +95,9 @@ const ToDos = () => {
 
   const getEndTime = () => {
     if (!allTasksLoading && !allTasksError) {
-    
       // setEndTimeData(allTasksList?.allTasksEndtime);
     }
-  }
-
+  };
 
   useEffect(() => {
     getMindData();
@@ -115,13 +111,12 @@ const ToDos = () => {
   useEffect(() => {
     getRelData();
   }, [relData]);
-useEffect(() => {
-  // console.log(allTasksList?.allTasksEndtime,"SASASASASASAS",endTimeData)
-  getEndTime()
-}
-, [endTimeData])
+  useEffect(() => {
+    // console.log(allTasksList?.allTasksEndtime,"SASASASASASAS",endTimeData)
+    getEndTime();
+  }, [endTimeData]);
 
-console.log(endTimeData,"endTimeData,llllk")
+  console.log(endTimeData, "endTimeData,llllk");
   const mindFilter = mindFullness?.filter((item) => {
     if (item?.status === true) {
       return item;
@@ -145,12 +140,15 @@ console.log(endTimeData,"endTimeData,llllk")
       return item;
     }
   });
-const totalFilterLength = mindFilter?.length + fitFilter?.length + financeFilter?.length + relFilter?.length;
-const totalTaskLength = mindFullness?.length + fit?.length + finance?.length + rel?.length;
+  const totalFilterLength =
+    mindFilter?.length +
+    fitFilter?.length +
+    financeFilter?.length +
+    relFilter?.length;
+  const totalTaskLength =
+    mindFullness?.length + fit?.length + finance?.length + rel?.length;
 
-
-const progressData = ( totalFilterLength / totalTaskLength) * 100;
-
+  const progressData = (totalFilterLength / totalTaskLength) * 100;
 
   const mindLenthpercent =
     ((mindFilter?.length ?? 0) * 100) / (mindFullness?.length ?? 1) || 0;
@@ -161,7 +159,7 @@ const progressData = ( totalFilterLength / totalTaskLength) * 100;
     ((financeFilter?.length ?? 0) * 100) / (finance?.length ?? 1) || 0;
   const relLenthpercent =
     ((relFilter?.length ?? 0) * 100) / relationships.length;
-    
+
   const pillarData = [
     {
       id: 1,
@@ -197,10 +195,14 @@ const progressData = ( totalFilterLength / totalTaskLength) * 100;
   ];
 
   const deleAll = async () => {
-  const result = await deleteAll.mutate({
-    id: user?.id as string,
-   })
-   window.location.reload();
+    const result = await deleteAll.mutate({
+      id: user?.id as string,
+    });
+    setRel([]);
+    setFit([]);
+    setFinance([]);
+    setMindFullness([]);
+    window.location.reload();
 
     return result;
   };
@@ -214,7 +216,7 @@ const progressData = ( totalFilterLength / totalTaskLength) * 100;
             Infuse your work with Emma&apos;s{" "}
             <span className="text-gray-400">4 Pillars</span> of Life.{" "}
           </h1>
-          <div className="md:w-[20%] border-gray-400  rounded-lg border p-2 text-center">
+          <div className="rounded-lg border  border-gray-400 p-2 text-center md:w-[20%]">
             {" "}
             <AlertDialog>
               <AlertDialogTrigger>Start a new day</AlertDialogTrigger>
@@ -228,7 +230,9 @@ const progressData = ( totalFilterLength / totalTaskLength) * 100;
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction  onClick={deleAll}>Continue</AlertDialogAction>
+                  <AlertDialogAction onClick={deleAll}>
+                    Continue
+                  </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
