@@ -38,6 +38,7 @@ import { endTimeAtom } from "~/recoil/atom/endtime";
 import { api } from "~/utils/api";
 import { useUser } from "@clerk/nextjs";
 import e from "express";
+import { Value } from "@radix-ui/react-select";
 
 const TodoBlock = (props: any) => {
   const [task, setTask] = useState<any>();
@@ -354,7 +355,7 @@ const TodoBlock = (props: any) => {
                       Start time
                     </Label>
                     <div className="flex w-[90%] gap-4">
-                      <Select>
+                      <Select onValueChange={(value) => setMindStartsHR(value)}>
                         <SelectTrigger className="">
                           <SelectValue placeholder="00" />
                         </SelectTrigger>
@@ -364,6 +365,10 @@ const TodoBlock = (props: any) => {
                               <SelectItem
                                 key={index}
                                 value={index.toString().padStart(2, "0")}
+                                onVolumeChange={(value) => {
+                                  console.log("clicked", "??");
+                                  setMindStartsHR(value.toString().padStart(2, "0"));
+                                }}
                               >
                                 {index.toString().padStart(2, "0")}
                               </SelectItem>
@@ -378,7 +383,7 @@ const TodoBlock = (props: any) => {
                       }}
                       placeholder="MM"
                     /> */}
-                      <Select>
+                      <Select onValueChange={(value)=> setMindStartsmm(value)}>
                         <SelectTrigger className="">
                           <SelectValue placeholder="00" />
                         </SelectTrigger>
@@ -388,6 +393,7 @@ const TodoBlock = (props: any) => {
                               <SelectItem
                                 key={index}
                                 value={index.toString().padStart(2, "0")}
+                                onVolumeChange={() => setMindStartsmm(index)}
                               >
                                 {index.toString().padStart(2, "0")}
                               </SelectItem>
@@ -407,17 +413,24 @@ const TodoBlock = (props: any) => {
                       }}
                       placeholder="AM / PM"
                     /> */}
-                      <Select>
+                      <Select onValueChange={(value)=> setMindClockTime(value)}>
                         <SelectTrigger className="">
                           <SelectValue placeholder="AM/PM" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem value="apple">Apple</SelectItem>
-                            <SelectItem value="banana">Banana</SelectItem>
-                            <SelectItem value="blueberry">Blueberry</SelectItem>
-                            <SelectItem value="grapes">Grapes</SelectItem>
-                            <SelectItem value="pineapple">Pineapple</SelectItem>
+                            <SelectItem
+                              onClick={() => setMindClockTime("AM")}
+                              value="AM"
+                            >
+                              AM
+                            </SelectItem>
+                            <SelectItem
+                              onClick={() => setMindClockTime("PM")}
+                              value="PM"
+                            >
+                              PM
+                            </SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>
@@ -429,7 +442,7 @@ const TodoBlock = (props: any) => {
                       End time
                     </Label>
                     <div className="flex w-[90%] gap-4">
-                      <Select>
+                      <Select onValueChange={(value)=> setMindEndsHR(value)}>
                         <SelectTrigger className="">
                           <SelectValue placeholder="00" />
                         </SelectTrigger>
@@ -439,6 +452,7 @@ const TodoBlock = (props: any) => {
                               <SelectItem
                                 key={index}
                                 value={index.toString().padStart(2, "0")}
+                                onClick={() => setMindEndsHR(index)}
                               >
                                 {index.toString().padStart(2, "0")}
                               </SelectItem>
@@ -446,14 +460,8 @@ const TodoBlock = (props: any) => {
                           </SelectGroup>
                         </SelectContent>
                       </Select>
-                      {/* const value = e.target.value;
-                        if (/^\d*$/.test(value) && parseInt(value) <= 60) {
-                          setMindStartsmm(value);
-                        }
-                      }}
-                      placeholder="MM"
-                    /> */}
-                      <Select>
+                     
+                      <Select onValueChange={(value)=> setMindEndsmm(value)}>
                         <SelectTrigger className="">
                           <SelectValue placeholder="00" />
                         </SelectTrigger>
@@ -463,6 +471,7 @@ const TodoBlock = (props: any) => {
                               <SelectItem
                                 key={index}
                                 value={index.toString().padStart(2, "0")}
+                                onClick={() => setMindEndsmm(index)}
                               >
                                 {index.toString().padStart(2, "0")}
                               </SelectItem>
@@ -482,17 +491,24 @@ const TodoBlock = (props: any) => {
                       }}
                       placeholder="AM / PM"
                     /> */}
-                      <Select>
+                      <Select onValueChange={(value)=> setMinddEndClockTime(value)}>
                         <SelectTrigger className="">
                           <SelectValue placeholder="AM/PM" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem value="apple">Apple</SelectItem>
-                            <SelectItem value="banana">Banana</SelectItem>
-                            <SelectItem value="blueberry">Blueberry</SelectItem>
-                            <SelectItem value="grapes">Grapes</SelectItem>
-                            <SelectItem value="pineapple">Pineapple</SelectItem>
+                            <SelectItem
+                              onClick={() => setMindEndsHR("AM")}
+                              value="AM"
+                            >
+                              AM
+                            </SelectItem>
+                            <SelectItem
+                              onClick={() => setMindEndsmm("PM")}
+                              value="PM"
+                            >
+                              PM
+                            </SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>
@@ -502,6 +518,7 @@ const TodoBlock = (props: any) => {
                 <DialogFooter>
                   <Button
                     onClick={() => {
+                      console.log(mindStartHR, "??????");
                       if (
                         task &&
                         mindStartHR &&
