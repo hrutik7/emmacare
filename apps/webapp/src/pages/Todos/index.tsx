@@ -248,6 +248,7 @@ const ToDos = () => {
               progress={item.progress}
               data={item.data}
               dataqty={item.dataqty}
+              loading = {[isLoading,fitIsLoading,financeIsLoading,relIsLoading]}
             />
           ))}
         </div>

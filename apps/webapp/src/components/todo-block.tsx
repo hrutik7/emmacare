@@ -555,6 +555,7 @@ const TodoBlock = (props: any) => {
           taskType={props?.title}
           taskId={props?.id}
           rowId={props?.data?.id || ""}
+          allTasksLoading={props?.loading}
         />
       </div>
 
