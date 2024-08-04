@@ -32,7 +32,7 @@ export const ambitiousGoalRouter = createTRPCRouter({
     }),
 
   getAmbitiousGoals: publicProcedure.query(async ({ ctx }) => {
-    const cachedAmbitiousGoalDate = await redis.get("ambitiousGoalDate");
+    const cachedAmbitiousGoalDate = await redis.get(ctx.currentUser);
     if (cachedAmbitiousGoalDate) {
       console.log("cacheddasdsad");
       return JSON.parse(cachedAmbitiousGoalDate);
@@ -45,7 +45,7 @@ export const ambitiousGoalRouter = createTRPCRouter({
         },
       });
 
-      await redis.set("ambitiousGoalDate", JSON.stringify(ambitiousGoals), "EX", 300);
+      await redis.set(ctx.currentUser, JSON.stringify(ambitiousGoals), "EX", 300);
       console.log(ambitiousGoals, "lodu", ctx.currentUser);
       return ambitiousGoals;
     }

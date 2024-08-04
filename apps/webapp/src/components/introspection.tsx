@@ -20,6 +20,7 @@ const Introspection = () => {
   },[]);
 
   const getIntrospection = () => {
+    console.log(words, "words");
     const introspectionWOrds = introQueryData?.introspectionData
       ?.replaceAll(/\*\*/g, "")
       ?.split(/\s+/)
