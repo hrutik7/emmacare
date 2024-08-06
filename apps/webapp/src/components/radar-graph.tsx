@@ -40,7 +40,10 @@ const RadarGraph = (props: any) => {
       resizeObserver.observe(containerRef.current);
     }
     console.log(
-      (props?.mind === 0) && (props?.wealth === 0) && (props?.relationship === 0) && (props?.fit === 0),
+      props?.mind === 0 &&
+        props?.wealth === 0 &&
+        props?.relationship === 0 &&
+        props?.fit === 0,
       "PPPPPPPPPPPPPPPSDDSD",
       props?.mind === 0 &&
         props?.wealth === 0 &&
@@ -62,8 +65,12 @@ const RadarGraph = (props: any) => {
 
   return (
     <div>
-      {
-      (props?.mind === 0) && (props?.wealth === 0) && (props?.relationship === 0) && (props?.fit === 0) ? null : (
+      {props?.mind === 0 &&
+      props?.wealth === 0 &&
+      props?.relationship === 0 &&
+      props?.fit === 0 ? (
+        <div className="w-[100%] text-center text-2xl"> </div>
+      ) : (
         <div className="flex  w-[100%] flex-col rounded-xl border border-gray-200 bg-white px-10 py-5 text-3xl font-semibold shadow-lg">
           <div>Life update</div>
           <div ref={containerRef} style={{ width: "100%", height: "100%" }}>
