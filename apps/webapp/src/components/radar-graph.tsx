@@ -10,11 +10,11 @@ import {
 import { useLayoutEffect } from "react";
 
 // ...
-const RadarGraph = (props:any) => {
+const RadarGraph = (props: any) => {
   const [dimensions, setDimensions] = useState({ width: 500, height: 246 });
   const containerRef = useRef(null);
   const [fontSize, setFontSize] = useState(22);
- 
+
   useLayoutEffect(() => {
     const handleResize = () => {
       const screenWidth = window.innerWidth;
@@ -39,7 +39,17 @@ const RadarGraph = (props:any) => {
     if (containerRef.current) {
       resizeObserver.observe(containerRef.current);
     }
-
+    console.log(
+      props?.mind === 0 &&
+        props?.wealth === 0 &&
+        props?.relationship === 0 &&
+        props?.fit === 0,
+      "PPPPPPPPPPPPPPPSDDSD",
+      props?.mind === 0 &&
+        props?.wealth === 0 &&
+        props?.relationship === 0 &&
+        props?.fit === 0,
+    );
     return () => {
       if (containerRef.current) {
         resizeObserver.unobserve(containerRef.current);
@@ -54,22 +64,36 @@ const RadarGraph = (props:any) => {
   ];
 
   return (
-    <div className="flex  w-[100%] flex-col rounded-xl border border-gray-200 bg-white px-10 py-5 text-3xl font-semibold shadow-lg">
-      <div>Life update</div>
-      <div ref={containerRef} style={{ width: "100%", height: "100%" }}>
-        <RadarChart
-          width={dimensions.width}
-          height={dimensions.width}
-          outerRadius="70%"
-          data={data}
-        >
-          <PolarGrid />
+    <div>
+      {props?.mind === 0 &&
+      props?.wealth === 0 &&
+      props?.relationship === 0 &&
+      props?.fit === 0 ? (
+        <div className="w-[100%] text-center text-2xl"> </div>
+      ) : (
+        <div className="flex  w-[100%] flex-col rounded-xl border border-gray-200 bg-white px-10 py-5 text-3xl font-semibold shadow-lg">
+          <div>Life update</div>
+          <div ref={containerRef} style={{ width: "100%", height: "100%" }}>
+            <RadarChart
+              width={dimensions.width}
+              height={dimensions.width}
+              outerRadius="70%"
+              data={data}
+            >
+              <PolarGrid />
 
-          <PolarAngleAxis dataKey="name" fontSize={fontSize} />
-          <PolarRadiusAxis fontSize={fontSize} />
-          <Radar dataKey="x" stroke="blue" fill="#BCDCFF" fillOpacity={0.5} />
-        </RadarChart>
-      </div>
+              <PolarAngleAxis dataKey="name" fontSize={fontSize} />
+              <PolarRadiusAxis fontSize={fontSize} />
+              <Radar
+                dataKey="x"
+                stroke="blue"
+                fill="#BCDCFF"
+                fillOpacity={0.5}
+              />
+            </RadarChart>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -21,7 +21,15 @@ import { fitnessAtom } from "~/recoil/atom/fitness";
 import { financeAtom } from "~/recoil/atom/finance";
 import { relationshipAtom } from "~/recoil/atom/relationship";
 import { api } from "~/utils/api";
-import { min, set } from "date-fns";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 const EditTask = (props: any) => {
   const [mindFullnessData, setMindfullnessData] =
     useRecoilState(mindFullnessAtom);
@@ -49,13 +57,14 @@ const EditTask = (props: any) => {
   const rowId = props.rowId;
   // console.log(props, "drops");
   const updateMind = async (data: any) => {
-    const response = await updateMindfullness.mutate(data);
+   
     // console.log(data, "dekhbhai", response);
     setMindfullnessData((oldMindfullnessData): any => {
       const newMindfullnessData = oldMindfullnessData.map(
         (item: any, index: number) => {
+          
           if (data.id == rowId) {
-            // console.log(rowId, "sirrrrrrrqe", data.id);
+            console.log("sdsdsdsdshgbuiuhu")
             return {
               ...item,
               task: data.task,
@@ -67,11 +76,12 @@ const EditTask = (props: any) => {
           return item;
         },
       );
-      console.log(newMindfullnessData, "iyuuu");
+      
       return newMindfullnessData;
     });
-    // console.log(first)
-    setMind(mindFullnessData);
+    const response = await updateMindfullness.mutate(data);
+    // console.log(mind,mindFullnessData,response, "iyuuu");
+    // setMind(mindFullnessData);
   };
 
   const updateFit = async (data: any) => {
@@ -99,7 +109,6 @@ const EditTask = (props: any) => {
             size={15}
             onClick={() => {
               // console.log("hereiseditprops", props);
-
               // <EditTask  />//data is the current mindfullness state just try to edit data[row.id]
             }}
           />
@@ -125,91 +134,168 @@ const EditTask = (props: any) => {
               />
             </div>
             <div className="justify-left flex items-center gap-2">
-              <Label htmlFor="username" className="w-[95%] text-left">
+              <Label htmlFor="username" className="w-[55%] text-left">
                 update start time
               </Label>
-              <Input
-                id="name"
-                value={mindStartHR}
-                className="col-span-3"
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (/^\d*$/.test(value) && parseInt(value) <= 12) {
-                    setMindStartsHR(value);
-                  }
-                }}
-                placeholder="HH"
-              />
-
-              <Input
-                id="name"
-                value={mindStartsmm}
-                className="col-span-3"
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (/^\d*$/.test(value) && parseInt(value) <= 60) {
-                    setMindStartsmm(value);
-                  }
-                }}
-                placeholder="MM"
-              />
-
-              <Input
-                id="name"
-                value={mindClockTime}
-                className="col-span-3"
-                onChange={(e) => {
-                  const value = e.target.value.toUpperCase();
-                  if (value === "AM" || value === "PM") {
-                    setMindClockTime(value);
-                  }
-                }}
-                placeholder="AM / PM"
-              />
+              <div className="flex w-[95%] gap-12">
+                <Select onValueChange={(value) => setMindStartsHR(value)}>
+                  <SelectTrigger className="">
+                    <SelectValue placeholder="00" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {[...Array(13)].map((_, index) => (
+                        <SelectItem
+                          key={index}
+                          value={index.toString().padStart(2, "0")}
+                          onVolumeChange={(value) => {
+                            console.log("clicked", "??");
+                            setMindStartsHR(value.toString().padStart(2, "0"));
+                          }}
+                        >
+                          {index.toString().padStart(2, "0")}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {/* const value = e.target.value;
+                        if (/^\d*$/.test(value) && parseInt(value) <= 60) {
+                          setMindStartsmm(value);
+                        }
+                      }}
+                      placeholder="MM"
+                    /> */}
+                <Select onValueChange={(value) => setMindStartsmm(value)}>
+                  <SelectTrigger className="">
+                    <SelectValue placeholder="00" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {[...Array(61)].map((_, index) => (
+                        <SelectItem
+                          key={index}
+                          value={index.toString().padStart(2, "0")}
+                          onVolumeChange={() => setMindStartsmm(index)}
+                        >
+                          {index.toString().padStart(2, "0")}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {/* <Input
+                      id="name"
+                      value={mindClockTime}
+                      className="col-span-3"
+                      onChange={(e) => {
+                        const value = e.target.value.toUpperCase();
+                        if (value === "AM" || value === "PM") {
+                          setMindClockTime(value);
+                        }
+                      }}
+                      placeholder="AM / PM"
+                    /> */}
+                <Select onValueChange={(value) => setMindClockTime(value)}>
+                  <SelectTrigger className="">
+                    <SelectValue placeholder="AM/PM" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem
+                        onClick={() => setMindClockTime("AM")}
+                        value="AM"
+                      >
+                        AM
+                      </SelectItem>
+                      <SelectItem
+                        onClick={() => setMindClockTime("PM")}
+                        value="PM"
+                      >
+                        PM
+                      </SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
-            <div className="justify-left flex items-center gap-2">
+            <div className="justify-left flex items-center gap-12">
               <Label htmlFor="username" className="w-[95%] text-left">
                 update end time
               </Label>
-              <Input
-                id="name"
-                value={mindEndsHR}
-                className="col-span-3"
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (/^\d*$/.test(value) && parseInt(value) <= 12) {
-                    setMindEndsHR(value);
-                  }
-                }}
-                placeholder="HH"
-              />
+              <div className="flex w-[90%] gap-12">
+                <Select onValueChange={(value) => setMindEndsHR(value)}>
+                  <SelectTrigger className="">
+                    <SelectValue placeholder="00" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {[...Array(13)].map((_, index) => (
+                        <SelectItem
+                          key={index}
+                          value={index.toString().padStart(2, "0")}
+                          onClick={() => setMindEndsHR(index)}
+                        >
+                          {index.toString().padStart(2, "0")}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
 
-              <Input
-                id="name"
-                value={mindEndsmm}
-                className="col-span-3"
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (/^\d*$/.test(value) && parseInt(value) <= 60) {
-                    setMindEndsmm(value);
-                  }
-                }}
-                placeholder="MM"
-              />
-
-              <Input
-                id="name"
-                value={minddEndClockTime}
-                className="col-span-3"
-                onChange={(e) => {
-                  const value = e.target.value.toUpperCase();
-                  if (value === "AM" || value === "PM") {
-                    setMinddEndClockTime(value);
-                  }
-                }}
-                placeholder="AM / PM"
-              />
+                <Select onValueChange={(value) => setMindEndsmm(value)}>
+                  <SelectTrigger className="">
+                    <SelectValue placeholder="00" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {[...Array(61)].map((_, index) => (
+                        <SelectItem
+                          key={index}
+                          value={index.toString().padStart(2, "0")}
+                          onClick={() => setMindEndsmm(index)}
+                        >
+                          {index.toString().padStart(2, "0")}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {/* <Input
+                      id="name"
+                      value={mindClockTime}
+                      className="col-span-3"
+                      onChange={(e) => {
+                        const value = e.target.value.toUpperCase();
+                        if (value === "AM" || value === "PM") {
+                          setMindClockTime(value);
+                        }
+                      }}
+                      placeholder="AM / PM"
+                    /> */}
+                <Select onValueChange={(value) => setMinddEndClockTime(value)}>
+                  <SelectTrigger className="">
+                    <SelectValue placeholder="AM/PM" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem
+                        onClick={() => setMindEndsHR("AM")}
+                        value="AM"
+                      >
+                        AM
+                      </SelectItem>
+                      <SelectItem
+                        onClick={() => setMindEndsmm("PM")}
+                        value="PM"
+                      >
+                        PM
+                      </SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
           <DialogFooter>
@@ -226,29 +312,6 @@ const EditTask = (props: any) => {
                 ) {
                   switch (taskId) {
                     case 1:
-                      setMindfullnessData((oldMindfullnessData): any => {
-                        const newMindfullnessData = oldMindfullnessData.map(
-                          (item: any, index: number) => {
-                            if (index == rowId) {
-                              // console.log("inreturn", index, rowId, item);
-                              return {
-                                ...item,
-                                task: task,
-                                startTime: `${mindStartHR}:${mindStartsmm} ${mindClockTime}`,
-                                endTime: `${mindEndsHR}:${mindEndsmm} ${minddEndClockTime}`,
-                              };
-                            }
-                            return item;
-                          },
-                        );
-                        return newMindfullnessData;
-                      });
-
-                      toast({
-                        title: "edit",
-                        description: "Task edit successfully",
-                        variant: "success",
-                      });
                       updateMind({
                         id: props.task.id,
                         task: task,
@@ -256,12 +319,39 @@ const EditTask = (props: any) => {
                         endTime: `${mindEndsHR}:${mindEndsmm} ${minddEndClockTime}`,
                         status: props.task.status,
                       });
-                      // console.log("first", {
-                        // task: task,
-                        // startTime: `${mindStartHR}:${mindStartsmm} ${mindClockTime}`,
-                        // endTime: `${mindEndsHR}:${mindEndsmm} ${minddEndClockTime}`,
-                        // status: true,
+
+                      // setMindfullnessData((oldMindfullnessData): any => {
+                      //   const newMindfullnessData = oldMindfullnessData.map(
+                      //     (item: any, index: number) => {
+                      //       console.log(index,rowId,"indexrowid")
+                      //       if (index === rowId ) {
+                      //         console.log(
+                      //           "inreturn",
+                      //           taskId,
+                      //           // newMindfullnessData,
+                      //           index,
+                      //           rowId,
+                      //           item
+                      //         );
+                      //         return {
+                      //           ...item,
+                      //           task: task,
+                      //           startTime: `${mindStartHR}:${mindStartsmm} ${mindClockTime}`,
+                      //           endTime: `${mindEndsHR}:${mindEndsmm} ${minddEndClockTime}`,
+                      //         };
+                      //       }
+                      //       return item;
+                      //     },
+                      //   );
+
+                      //   return newMindfullnessData;
                       // });
+
+                      toast({
+                        title: "edit",
+                        description: "Task edit successfully",
+                        variant: "success",
+                      });
                       setOpen(false);
                       break;
                     case 2:

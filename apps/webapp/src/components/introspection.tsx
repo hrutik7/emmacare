@@ -20,6 +20,7 @@ const Introspection = () => {
   },[]);
 
   const getIntrospection = () => {
+    console.log(words, "words");
     const introspectionWOrds = introQueryData?.introspectionData
       ?.replaceAll(/\*\*/g, "")
       ?.split(/\s+/)
@@ -50,23 +51,35 @@ const Introspection = () => {
   }
 
   return (
-    <div className="flex w-[100%] flex-col gap-6 rounded-xl  border-gray-200 bg-white px-10  py-12 text-left text-3xl font-semibold shadow-lg">
-      <div>Introspection ✨</div>
-
-      <div
-        style={{
-          scrollbarWidth: "thin",
-          msOverflowStyle: "none",
-          scrollbarColor: "black",
-          overflowX: "auto", // Add this line to enable horizontal scrolling
-        }}
-        className="h-56 text-wrap  w-[100%] overflow-y-scroll rounded-md border"
-      >
-        <div className="text-wrap ">
-          <div className="px-10 py-10 text-sm text-gray-400">{words}</div>
+   <div>
+    {
+      words.length > 0 ? (
+        <div className="flex w-[100%] flex-col gap-6 rounded-xl  border-gray-200 bg-white px-10  py-12 text-left text-3xl font-semibold shadow-lg">
+        <div>Introspection ✨</div>
+  
+        <div
+          style={{
+            scrollbarWidth: "thin",
+            msOverflowStyle: "none",
+            scrollbarColor: "black",
+            overflowX: "auto", // Add this line to enable horizontal scrolling
+          }}
+          className="h-56 text-wrap  w-[100%] overflow-y-scroll rounded-md border"
+        >
+          <div className="text-wrap ">
+            <div className="px-10 py-10 text-sm text-gray-400">{words}</div>
+          </div>
         </div>
       </div>
-    </div>
+      ) : (
+        <div>
+          <h1 >
+            
+          </h1>
+        </div>
+      )
+    }
+   </div>
   );
 };
 

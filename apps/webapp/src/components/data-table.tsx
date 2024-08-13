@@ -6,6 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { cn } from "~/lib/utils";
 import { api } from "~/utils/api";
 import { Checkbox } from "~/components/ui/checkbox";
 import DeleteTask from "./deletetask";
@@ -26,6 +27,7 @@ import EditTask from "./edittask";
 import FinishTask from "./finishedtask";
 import { CheckCheck } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
+import { Skeleton } from "./ui/skeleton";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -39,6 +41,8 @@ export function DataTable<TData, TValue>({
   taskId,
   taskType,
   rowID,
+  allTasksLoading,
+  className,
 }: any) {
   const table = useReactTable({
     data,
@@ -70,13 +74,12 @@ export function DataTable<TData, TValue>({
 
   const [check, setCheck] = useState(true);
   const [taskrowId, setTaskRowId] = useState(1);
-  // console.log(data, "databatte");
-const updateProgress = () =>{
-  dailyProgress.mutate({
-    dayname: new Date().toLocaleDateString(),
-   
-  });
-}
+  console.log(data, "databatte",allTasksLoading);
+  const updateProgress = () => {
+    dailyProgress.mutate({
+      dayname: new Date().toLocaleDateString(),
+    });
+  };
   const updateMindTask = async (
     status: boolean,
     rowId: string,
@@ -99,11 +102,9 @@ const updateProgress = () =>{
       const dailyprognumber = daialyTaskData?.allEndTimes?.map((task: any) => {
         return task;
       });
-      
-      
+
       dailyProgress.mutate({
         dayname: new Date().toLocaleDateString(),
-       
       });
       console.log(dailyProgress.data, "radarffdfd");
     } else {
@@ -116,7 +117,7 @@ const updateProgress = () =>{
       });
     }
   };
-
+console.log(data, "databatte",allTasksLoading);
   const updateFitnessTask = async (
     status: boolean,
     rowId: string,
@@ -137,11 +138,9 @@ const updateProgress = () =>{
       const dailyprognumber = daialyTaskData?.allEndTimes?.map((task: any) => {
         return task;
       });
-      
-      
+
       dailyProgress.mutate({
         dayname: new Date().toLocaleDateString(),
-       
       });
     } else {
       fitnessTaskDataAdd.mutate({
@@ -176,11 +175,9 @@ const updateProgress = () =>{
       const dailyprognumber = daialyTaskData?.allEndTimes?.map((task: any) => {
         return task;
       });
-      
-      
+
       dailyProgress.mutate({
         dayname: new Date().toLocaleDateString(),
-       
       });
     } else {
       wealthData.mutate({
@@ -215,11 +212,9 @@ const updateProgress = () =>{
       const dailyprognumber = daialyTaskData?.allEndTimes?.map((task: any) => {
         return task;
       });
-      
-      
+
       dailyProgress.mutate({
         dayname: new Date().toLocaleDateString(),
-       
       });
     } else {
       relationTaskDataAdd.mutate({
@@ -341,7 +336,7 @@ const updateProgress = () =>{
                   ))}
                 </TableRow>
               ))
-            ) : (
+            ) : !allTasksLoading[0] ? (
               <TableRow>
                 <TableCell
                   colSpan={columns?.length}
@@ -351,6 +346,16 @@ const updateProgress = () =>{
                   Add Tasks.
                 </TableCell>
               </TableRow>
+            ) : (
+              [1, 2, 3, 4].map((index) => (
+                <TableRow>
+                  {[...Array(5)].map((_, index) => (
+                    <TableCell key={index}>
+                      <Skeleton className="h-4 w-10 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-400" />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
             )}
           </TableBody>
         )}
@@ -441,16 +446,26 @@ const updateProgress = () =>{
                   ))}
                 </TableRow>
               ))
-            ) : (
+            ) :  !allTasksLoading[1]  ? (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={columns?.length}
                   className="h-24 text-center font-semibold"
-                  // onClick={() => {setTask(2)}}
+                  // onClick={() => {setTask(1)}}
                 >
                   Add Tasks.
                 </TableCell>
               </TableRow>
+            ) : (
+              [1, 2, 3, 4].map((index) => (
+                <TableRow>
+                  {[...Array(5)].map((_, index) => (
+                    <TableCell key={index}>
+                      <Skeleton className="h-4 w-10 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-400" />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
             )}
           </TableBody>
         )}
@@ -541,16 +556,26 @@ const updateProgress = () =>{
                   ))}
                 </TableRow>
               ))
-            ) : (
+            ) :  !allTasksLoading[2]  ? (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={columns?.length}
                   className="h-24 text-center font-semibold"
-                  // onClick={() => {setTask(3)}}
+                  // onClick={() => {setTask(1)}}
                 >
                   Add Tasks.
                 </TableCell>
               </TableRow>
+            ) : (
+              [1, 2, 3, 4].map((index) => (
+                <TableRow>
+                  {[...Array(5)].map((_, index) => (
+                    <TableCell key={index}>
+                      <Skeleton className="h-4 w-10 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-400" />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
             )}
           </TableBody>
         )}
@@ -641,16 +666,26 @@ const updateProgress = () =>{
                   ))}
                 </TableRow>
               ))
-            ) : (
+            ) :  !allTasksLoading[3]  ? (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={columns?.length}
                   className="h-24 text-center font-semibold"
-                  // onClick={() => {setTask(4)}}
+                  // onClick={() => {setTask(1)}}
                 >
                   Add Tasks.
                 </TableCell>
               </TableRow>
+            ) : (
+              [1, 2, 3, 4].map((index) => (
+                <TableRow>
+                  {[...Array(5)].map((_, index) => (
+                    <TableCell key={index}>
+                      <Skeleton className="h-4 w-10 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-400" />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
             )}
           </TableBody>
         )}

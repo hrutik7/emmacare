@@ -70,7 +70,7 @@ export default function RootLayout({
 
           <div
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-            className="scrollbar-width-0 h-[100vh] max-h-[562px] w-full overflow-y-auto bg-[#F8FAFA] p-8"
+            className="scrollbar-width-0 h-[100vh] max-h-[562px] w-full overflow-y-auto p-4 bg-[#F8FAFA] md:p-8"
           >
             {children}
           </div>

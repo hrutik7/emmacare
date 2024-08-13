@@ -24,27 +24,10 @@ import { api } from "~/utils/api";
 //   isError,
 // } = api.dailytask?.getMindfulTasks?.useQuery();
 
-const data = [
-  {
-    name: "week 1",
-    progress: 0,
-  },
-  {
-    name: "week 2",
-    progress: 1000,
-  },
-  {
-    name: "week 3",
-    progress: 700,
-  },
-  {
-    name: "week 4",
-    progress: 500,
-  },
-];
+
 
 const LineGraph = () => {
-  const [dimensions, setDimensions] = useState({ width: 500, height: 400 });
+  const [dimensions, setDimensions] = useState({ width: 600, height: 200 });
   const containerRef = useRef(null);
   const [fontSize, setFontSize] = useState(22);
   const [data, setData] = useState<any>();
@@ -68,7 +51,7 @@ const LineGraph = () => {
     const resizeObserver = new ResizeObserver((entries) => {
       if (entries[0]) {
         const { width, height } = entries[0].contentRect;
-        setDimensions({ width, height });
+        setDimensions({ width, height  });
       }
     });
     if (containerRef.current) {
@@ -90,11 +73,11 @@ const LineGraph = () => {
     isLoading,
   } = api.progress.getProgress.useQuery();
   useEffect(() => {
-    // console.log(getTaskData, "getTaskData");
+    console.log(getTaskData, "getTaskData");
     getAllData();
   }, [getTaskData]);
   const getAllData = async () => {
-    // console.log("callllled");
+    
     if (!isLoading && !isError) {
       const transformedData = getTaskData.map((task: any, index: any) => ({
         name: `day ${index + 1}`,
@@ -105,89 +88,93 @@ const LineGraph = () => {
     }
   };
   return (
-    <div className="flex w-[100%] flex-col rounded-xl border border-gray-200 bg-white py-5 text-3xl font-semibold shadow-lg">
-      Progress
-      <div
-        ref={containerRef}
-        style={{ width: "100%", height: "100%" }}
-        className="px-2 py-5"
-      >
-        <div>
-          <Tabs defaultValue="day" className="w-[100%]">
-            <TabsList>
-              <TabsTrigger value="day">day</TabsTrigger>
-              <TabsTrigger value="week">week</TabsTrigger>
-              <TabsTrigger value="month">month</TabsTrigger>
-            </TabsList>
-            <TabsContent value="day">
-              <LineChart
-                style={{ margin: "auto" }}
-                width={dimensions.width}
-                height={dimensions.width}
-                data={data}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                {/* <CartesianGrid strokeDasharray="2 2" /> */}
-                <XAxis dataKey="name" fontSize={fontSize} />
-                <YAxis fontSize={fontSize} />
-                <Tooltip />
+    <div>
+      {data?.length === 0 ? null : (
+        <div className="flex w-[100%] flex-col rounded-xl border border-gray-200 bg-white py-5 text-3xl font-semibold shadow-lg">
+          Progress
+          <div
+            ref={containerRef}
+            style={{ width: "100%", height: "50%" }}
+            className="md:px-2 py-5"
+          >
+            <div>
+              <Tabs defaultValue="day" className="md:w-[100%] w-[80%]">
+                <TabsList>
+                  <TabsTrigger value="day">day</TabsTrigger>
+                  <TabsTrigger value="week">week</TabsTrigger>
+                  <TabsTrigger value="month">month</TabsTrigger>
+                </TabsList>
+                <TabsContent value="day">
+                  <LineChart
+                    style={{ margin: "auto" }}
+                    width={dimensions.width}
+                    height={dimensions.width / 1.5}
+                    data={data?.slice(-7)}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    {/* <CartesianGrid strokeDasharray="2 2" /> */}
+                    <XAxis dataKey="name" fontSize={fontSize} />
+                    <YAxis fontSize={fontSize} />
+                    <Tooltip />
 
-                <Line type="monotone" dataKey="progress" stroke="blue" />
-              </LineChart>
-            </TabsContent>
-            <TabsContent value="week">
-              {" "}
-              <LineChart
-                style={{ margin: "auto" }}
-                width={dimensions.width}
-                height={dimensions.width}
-                data={data}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                {/* <CartesianGrid strokeDasharray="2 2" /> */}
-                <XAxis dataKey="name" fontSize={fontSize} />
-                <YAxis fontSize={fontSize} />
-                <Tooltip />
+                    <Line type="monotone" dataKey="progress" stroke="blue" />
+                  </LineChart>
+                </TabsContent>
+                <TabsContent value="week">
+                  {" "}
+                  <LineChart
+                    style={{ margin: "auto" }}
+                    width={dimensions.width}
+                    height={dimensions.width}
+                    data={data}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    {/* <CartesianGrid strokeDasharray="2 2" /> */}
+                    <XAxis dataKey="name" fontSize={fontSize} />
+                    <YAxis fontSize={fontSize} />
+                    <Tooltip />
 
-                <Line type="monotone" dataKey="progress" stroke="blue" />
-              </LineChart>
-            </TabsContent>
+                    <Line type="monotone" dataKey="progress" stroke="blue" />
+                  </LineChart>
+                </TabsContent>
 
-            <TabsContent value="month">
-              {" "}
-              <LineChart
-                style={{ margin: "auto" }}
-                width={dimensions.width}
-                height={dimensions.width}
-                data={data}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                {/* <CartesianGrid strokeDasharray="2 2" /> */}
-                <XAxis dataKey="name" fontSize={fontSize} />
-                <YAxis fontSize={fontSize} />
-                <Tooltip />
+                <TabsContent value="month">
+                  {" "}
+                  <LineChart
+                    style={{ margin: "auto" }}
+                    width={dimensions.width}
+                    height={dimensions.width}
+                    data={data}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    {/* <CartesianGrid strokeDasharray="2 2" /> */}
+                    <XAxis dataKey="name" fontSize={fontSize} />
+                    <YAxis fontSize={fontSize} />
+                    <Tooltip />
 
-                <Line type="monotone" dataKey="progress" stroke="blue" />
-              </LineChart>
-            </TabsContent>
-          </Tabs>
+                    <Line type="monotone" dataKey="progress" stroke="blue" />
+                  </LineChart>
+                </TabsContent>
+              </Tabs>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

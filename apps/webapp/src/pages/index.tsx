@@ -32,7 +32,7 @@ export default function Home() {
       </div>
       <div className="flex   w-[100%] flex-col gap-12 text-center">
         <Countdown />
-        <div className="flex w-[100%] flex-col gap-6 md:flex-row">
+        <div className="flex w-[100%] flex-col gap-3 md:justify-between md:flex-row">
           <RadarGraph mind={data?.mindScore} fit={data?.fitnessScore} relationship={data?.relationShipScore} wealth={data?.wealthScore} />
           <LineGraph />
         </div>

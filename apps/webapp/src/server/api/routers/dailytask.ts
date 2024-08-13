@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, privateProcedure } from "~/server/api/trpc";
-
+import { redis } from "~/lib/redis";
 export const dailytaskRouter = createTRPCRouter({
   createMindfulTask: privateProcedure
     .input(
@@ -32,6 +32,7 @@ export const dailytaskRouter = createTRPCRouter({
         },
       });
       console.log("mindhainbhai", mindTask);
+
       return mindTask;
     }),
 
@@ -47,6 +48,9 @@ export const dailytaskRouter = createTRPCRouter({
     }),
 
   getMindfulTasks: privateProcedure.query(async ({ ctx }) => {
+   
+   
+
     const mindfulTasks = await ctx.prisma.mind.findMany({
       where: {
         mindrel: {
@@ -54,7 +58,8 @@ export const dailytaskRouter = createTRPCRouter({
         },
       },
     });
-    console.log(mindfulTasks, "lodu", ctx.currentUser);
+
+    
     return mindfulTasks;
   }),
 
@@ -81,7 +86,7 @@ export const dailytaskRouter = createTRPCRouter({
           status: input.status,
         },
       });
-      console.log(mindfulTask, "lindBuddhi");
+
       return mindfulTask;
     }),
 
@@ -353,6 +358,7 @@ export const dailytaskRouter = createTRPCRouter({
           },
         },
       });
+      console.log("ybbbbbbbkjjknkn")
       return { mind, fit, wealth, rel };
     }),
 });

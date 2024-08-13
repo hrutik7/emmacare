@@ -62,7 +62,7 @@ const ToDos = () => {
     return () => clearInterval(intervalId);
   }, []);
   const getIntroSpec = async () => {
-    const introspectionWOrds = introQueryData?.introspectionData
+    const introspectionWOrds = await introQueryData?.introspectionData
       ?.replaceAll(/\*\*/g, "")
       ?.split(/\s+/)
       ? introQueryData?.introspectionData
